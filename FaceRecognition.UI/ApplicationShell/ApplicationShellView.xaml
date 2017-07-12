@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="FaceRecognition.UI.ApplicationShell.ApplicationShellView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FaceRecognition.UI.Resource"
+             xmlns:views="clr-namespace:FaceRecognition.UI.Views"
+             mc:Ignorable="d" 
+             xmlns:cal="http://www.caliburnproject.org"
+             d:DesignHeight="640" d:DesignWidth="1024">
+    <Grid>
+        <TabControl>
+            <TabItem Header="{x:Static local:en_US.GENERAL}">
+                <UserControl cal:View.Model="{Binding MainScreenView}"/>
+            </TabItem>
+            <TabItem Header="{x:Static local:en_US.UNTRACKED_PEOPLE}">
+                <UserControl cal:View.Model="{Binding UnknowScreenView}"/>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>
