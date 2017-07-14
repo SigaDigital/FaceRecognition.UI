@@ -70,6 +70,15 @@ namespace FaceRecognition.UI.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string CANCEL {
+            get {
+                return ResourceManager.GetString("CANCEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Capturing Interval.
         /// </summary>
         public static string CAPTURING_INTERVAL {

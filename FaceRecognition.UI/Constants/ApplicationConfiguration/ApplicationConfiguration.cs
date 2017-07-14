@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FaceRecognition.UI.Utils;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,19 +23,28 @@ namespace FaceRecognition.UI.Constants.ApplicationConfiguration
 
         private const string CORE_DIRECTORY = "Core";
 
-        private const string CORE_EXE_NAME = "test.exe";
+        private const string CORE_EXE_NAME = "video-tagging.exe";
 
-        private const string UNKNWON_PEOPLE_DIRECTORY_NAME = "Unknowns";
+        private const string UNKNWON_PEOPLE_DIRECTORY_NAME = "Unknows";
 
         private const string COMMON_DATA_DIRECTORY = "Data";
+
+        private const string DESCRIPTOR_DIRECTORY = "Descriptor";
+
+        private const string TEMP_TRAIN_DIRECTORY = "Temp";
 
         public ApplicationConfiguration()
         {
             ApplicationName = "VideoTagging";
-            ApplicationGuid = new Guid("0a132ffd-c7c0-468c-8970-90f564d65ed7");
-            //Guid.NewGuid();
+            ApplicationGuid = Guid.NewGuid();
             ApplicationDataDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ApplicationName);
             ApplicationPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+            this.ValidateAndCreateDirectory(ApplicationDataDirectory);
+            this.ValidateAndCreateDirectory(GetUnknownPeopleDirectory());
+            this.ValidateAndCreateDirectory(GetTempTrainPath());
+            this.ValidateAndCreateDirectory(Path.Combine(ApplicationDataDirectory, INSTANCE_DIRECTORY_NAME));
+            FileUtils.CopyDirectory(Path.Combine(ApplicationPath, CORE_DIRECTORY, COMMON_DATA_DIRECTORY), Path.Combine(ApplicationDataDirectory, COMMON_DATA_DIRECTORY));
         }
 
         public string GetTabDataDirectory(Guid tabGuid)
@@ -50,6 +60,24 @@ namespace FaceRecognition.UI.Constants.ApplicationConfiguration
         public string GetUnknownPeopleDirectory()
         {
             return Path.Combine(ApplicationDataDirectory, COMMON_DATA_DIRECTORY, UNKNWON_PEOPLE_DIRECTORY_NAME);
+        }
+
+        public string GetDescriptorPath()
+        {
+            return Path.Combine(ApplicationDataDirectory, COMMON_DATA_DIRECTORY, DESCRIPTOR_DIRECTORY);
+        }
+
+        public string GetTempTrainPath()
+        {
+            return Path.Combine(ApplicationDataDirectory, COMMON_DATA_DIRECTORY, TEMP_TRAIN_DIRECTORY);
+        }
+
+        private void ValidateAndCreateDirectory (string path)
+        {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
         }
     }
 }

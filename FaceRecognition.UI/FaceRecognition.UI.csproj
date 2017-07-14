@@ -79,11 +79,13 @@
       <DependentUpon>PersonImagePresenterControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="CustomControls\PersonImagePresenter\PersonImagePresenterModel.cs" />
+    <Compile Include="CustomControls\PersonImagePresenter\RemoveImageEventArgs.cs" />
     <Compile Include="Resource\en-US.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>en-US.resx</DependentUpon>
     </Compile>
+    <Compile Include="Utils\FileUtils.cs" />
     <Compile Include="Utils\ProcessUtils.cs" />
     <Compile Include="Views\Main\IMainScreenViewModel.cs" />
     <Compile Include="Views\Main\MainScreenViewModel.cs" />
@@ -155,6 +157,9 @@
     <Resource Include="Asset\Icons\play.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /I /Y /E "$(ProjectDir)thirdparty" "$(ProjectDir)\bin\Debug\Core"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

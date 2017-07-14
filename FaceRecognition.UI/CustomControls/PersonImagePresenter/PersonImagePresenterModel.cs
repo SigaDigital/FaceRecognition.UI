@@ -44,7 +44,7 @@ namespace FaceRecognition.UI.CustomControls.PersonImagePresenter
         }
         private ObservableCollection<string> _imagePaths { get; set; }
 
-        public int HeaderMode
+        public HeaderMode HeaderMode
         {
             get
             {
@@ -59,6 +59,29 @@ namespace FaceRecognition.UI.CustomControls.PersonImagePresenter
                 }
             }
         }
-        private int _headerMode { get; set; }
+        private HeaderMode _headerMode { get; set; }
+
+        public bool HasChanged
+        {
+            get
+            {
+                return this._hasChaged;
+            }
+            set
+            {
+                if (this._hasChaged != value)
+                {
+                    this._hasChaged = value;
+                    NotifyOfPropertyChange(() => HasChanged);
+                }
+            }
+        }
+        private bool _hasChaged { get; set; }
+    }
+
+    public enum HeaderMode
+    {
+        VIEW = 0,
+        EDITABLE = 1
     }
 }

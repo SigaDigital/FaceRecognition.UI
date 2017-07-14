@@ -9,5 +9,8 @@ namespace FaceRecognition.UI.Views
 {
     public interface IUnknownViewModel
     {
+        void UpdateUnknownPeople();
+
+        void Clear();
     }
 }

@@ -19,5 +19,9 @@ namespace FaceRecognition.UI.Constants.ApplicationConfiguration
         string GetTabDataDirectory(Guid tabGuid);
 
         string GetCoreExePath();
+
+        string GetDescriptorPath();
+
+        string GetTempTrainPath();
     }
 }

@@ -95,9 +95,8 @@ namespace FaceRecognition.UI.Views
         {
             base.OnInitialize();
 
-            TabGuid = new Guid("d101a42e-9a67-49a4-903c-93c51198f169");
-            
-            //Guid.NewGuid();
+            PersonImage = new ObservableCollection<PersonImagePresenterModel>();
+            TabGuid = Guid.NewGuid();
             Interval = 3000;
         }
 
@@ -125,20 +124,23 @@ namespace FaceRecognition.UI.Views
 
         public void Proceed()
         {
-            PersonImage = new ObservableCollection<PersonImagePresenterModel>();
+            this.CleanUp();
             if (!string.IsNullOrWhiteSpace(VdoPath))
             {
+                IoC.Get<IUnknownViewModel>().Clear();
                 var fullPath = VdoPath;
 
                 var coreExePath = IoC.Get<IApplicationConfiguration>().GetCoreExePath();
-                //ProcessUtils.ExecuteCommand(coreExePath, new string[] 
-                //                                { 
-                //                                    this.VdoFileName.OriginalString, 
-                //                                    "SVM", 
-                //                                    Interval.ToString(),
-                //                                    IoC.Get<IApplicationConfiguration>().ApplicationGuid.ToString(),
-                //                                    this.TabGuid.ToString()
-                //                                });
+                ProcessUtils.ExecuteCommand(coreExePath, new string[]
+                                                {
+                                                    "rec",
+                                                    VdoPath,
+                                                    "SVM",
+                                                    Interval.ToString(),
+                                                    IoC.Get<IApplicationConfiguration>().ApplicationGuid.ToString(),
+                                                    this.TabGuid.ToString(),
+                                                    IoC.Get<IApplicationConfiguration>().GetDescriptorPath()
+                                                });
 
                 var tabDirectory = IoC.Get<IApplicationConfiguration>().GetTabDataDirectory(this.TabGuid);
                 var tabDataDirectory = new DirectoryInfo(tabDirectory);
@@ -149,10 +151,17 @@ namespace FaceRecognition.UI.Views
                     {
                         PersonName = person.Name,
                         ImagePaths = new ObservableCollection<string>(Directory.GetFiles(person.FullName).ToList()),
-                        HeaderMode = 0
+                        HeaderMode = HeaderMode.VIEW
                     });
                 }
+
+                IoC.Get<IUnknownViewModel>().UpdateUnknownPeople();
             }
+        }
+
+        private void CleanUp()
+        {
+            this.PersonImage.Clear();
         }
     }
 }

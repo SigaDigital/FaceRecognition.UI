@@ -120,6 +120,9 @@
   <data name="BROWSE" xml:space="preserve">
     <value>Browse</value>
   </data>
+  <data name="CANCEL" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="CAPTURING_INTERVAL" xml:space="preserve">
     <value>Capturing Interval</value>
   </data>

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FaceRecognition.UI.Framework.ViewBase
 {
-    public class ViewBase : Screen
+    public class ViewBase : Screen, IActivate
     {
         protected virtual void OnViewReady() { }
 
