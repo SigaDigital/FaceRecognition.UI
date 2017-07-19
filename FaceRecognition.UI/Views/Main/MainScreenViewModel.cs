@@ -139,10 +139,16 @@ namespace FaceRecognition.UI.Views
                                                     Interval.ToString(),
                                                     IoC.Get<IApplicationConfiguration>().ApplicationGuid.ToString(),
                                                     this.TabGuid.ToString(),
-                                                    IoC.Get<IApplicationConfiguration>().GetDescriptorPath()
+                                                    IoC.Get<IApplicationConfiguration>().GetDescriptorPath(),
+                                                    0.00625.ToString(),
+                                                    0.00625.ToString()
                                                 });
 
                 var tabDirectory = IoC.Get<IApplicationConfiguration>().GetTabDataDirectory(this.TabGuid);
+
+                if (!Directory.Exists(tabDirectory))
+                    Directory.CreateDirectory(tabDirectory);
+
                 var tabDataDirectory = new DirectoryInfo(tabDirectory);
                 var result = tabDataDirectory.GetDirectories();
                 foreach (var person in result)

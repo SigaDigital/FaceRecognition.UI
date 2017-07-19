@@ -99,7 +99,9 @@ namespace FaceRecognition.UI.Views
                                                     "train",
                                                     person.PersonName,
                                                     individualTrainPath,
-                                                    IoC.Get<IApplicationConfiguration>().GetDescriptorPath()
+                                                    IoC.Get<IApplicationConfiguration>().GetDescriptorPath(),
+                                                    0.00625.ToString(),
+                                                    0.00625.ToString()
                                                 });
             }
 
