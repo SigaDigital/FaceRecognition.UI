@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -76,43 +77,41 @@ namespace FaceRecognition.UI.Views
             var unknownPeopleDirectory = IoC.Get<IApplicationConfiguration>().GetUnknownPeopleDirectory();
             var tempDirInfo = new DirectoryInfo(tempTrainPath);
             var coreExePath = IoC.Get<IApplicationConfiguration>().GetCoreExePath();
+            var appDataPath = IoC.Get<IApplicationConfiguration>().GetAppDataPath();
             this.Clear();
 
-            foreach (var person in trainList)
+            if (!File.Exists(appDataPath))
             {
-                var individualTrainPath = Path.Combine(tempTrainPath, person.PersonName);
-                Directory.CreateDirectory(individualTrainPath);
+                File.Create(Path.Combine(appDataPath, "list.txt")).Dispose();
+            }
 
-                foreach(var img in person.ImagePaths)
+            using (var tw = new StreamWriter(Path.Combine(appDataPath, "list.txt"), true))
+            {
+                foreach (var person in trainList)
                 {
-                    File.Move(img, Path.Combine(individualTrainPath, Path.GetFileName(img)));
+                    var imgDir = new DirectoryInfo(Path.Combine(unknownPeopleDirectory, Path.GetDirectoryName(person.ImagePaths[0])));
+
+                    foreach (var file in imgDir.GetFiles())
+                    {
+                        File.Delete(file.FullName);
+                    }
+
+                    imgDir.Delete();
+                    tw.WriteLine(person.PersonName);
                 }
 
-                var datFiles = Directory.GetFiles(Path.Combine(unknownPeopleDirectory, Path.GetDirectoryName(person.ImagePaths[0])), "*.dat").ToList();
-                File.Move(datFiles[0], Path.Combine(individualTrainPath, string.Format("Descriptor_{0}.dat", person.PersonName)));
-
-                var prevDir = new DirectoryInfo(Path.Combine(unknownPeopleDirectory, Path.GetDirectoryName(person.ImagePaths[0])));
-                prevDir.Delete();
-
-                ProcessUtils.ExecuteCommand(coreExePath, new string[]
-                                                {
-                                                    "train",
-                                                    person.PersonName,
-                                                    individualTrainPath,
-                                                    IoC.Get<IApplicationConfiguration>().GetDescriptorPath(),
-                                                    0.00625.ToString(),
-                                                    0.00625.ToString()
-                                                });
+                tw.Close();
             }
 
-            foreach (FileInfo file in tempDirInfo.GetFiles())
-            {
-                file.Delete();
-            }
-            foreach (DirectoryInfo dir in tempDirInfo.GetDirectories())
-            {
-                dir.Delete(true);
-            }
+            ProcessUtils.ExecuteCommand(@"C:/python27/python.exe", new string[]
+                                               {
+                                                    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\main.py",
+                                                    "-f \"" + Path.Combine(appDataPath, "list.txt") + "\"",
+                                                    "-t 100",
+                                                    "-d \"" + IoC.Get<IApplicationConfiguration>().GetDescriptorPath() + "\"",
+                                               });
+
+            File.Delete(Path.Combine(appDataPath, "list.txt"));
 
             this.UpdateUnknownPeople();
         }

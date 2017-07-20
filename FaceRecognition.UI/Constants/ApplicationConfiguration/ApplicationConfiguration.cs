@@ -44,7 +44,11 @@ namespace FaceRecognition.UI.Constants.ApplicationConfiguration
             this.ValidateAndCreateDirectory(GetUnknownPeopleDirectory());
             this.ValidateAndCreateDirectory(GetTempTrainPath());
             this.ValidateAndCreateDirectory(Path.Combine(ApplicationDataDirectory, INSTANCE_DIRECTORY_NAME));
-            FileUtils.CopyDirectory(Path.Combine(ApplicationPath, CORE_DIRECTORY, COMMON_DATA_DIRECTORY), Path.Combine(ApplicationDataDirectory, COMMON_DATA_DIRECTORY));
+
+            if (!Directory.Exists(Path.Combine(ApplicationDataDirectory, COMMON_DATA_DIRECTORY)))
+            {
+                FileUtils.CopyDirectory(Path.Combine(ApplicationPath, CORE_DIRECTORY, COMMON_DATA_DIRECTORY), Path.Combine(ApplicationDataDirectory, COMMON_DATA_DIRECTORY));
+            }
         }
 
         public string GetTabDataDirectory(Guid tabGuid)
@@ -70,6 +74,11 @@ namespace FaceRecognition.UI.Constants.ApplicationConfiguration
         public string GetTempTrainPath()
         {
             return Path.Combine(ApplicationDataDirectory, COMMON_DATA_DIRECTORY, TEMP_TRAIN_DIRECTORY);
+        }
+
+        public string GetAppDataPath()
+        {
+            return ApplicationDataDirectory;
         }
 
         private void ValidateAndCreateDirectory (string path)

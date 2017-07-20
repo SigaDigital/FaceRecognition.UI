@@ -23,5 +23,7 @@ namespace FaceRecognition.UI.Constants.ApplicationConfiguration
         string GetDescriptorPath();
 
         string GetTempTrainPath();
+
+        string GetAppDataPath();
     }
 }
