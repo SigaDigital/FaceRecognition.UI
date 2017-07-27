@@ -33,9 +33,9 @@
                                 </Style.Triggers>
                             </Style>
                         </StackPanel.Style>
-                        <TextBlock Text="{Binding PersonName}"/>
+						<TextBlock Text="{Binding PersonName}"/>
 
-                        <Button Padding="2" Margin="5 0 0 0" Click="CancelButtonClicked">
+						<Button Padding="2" Margin="5 0 0 0" Click="CancelButtonClicked">
                             <Button.Style>
                                 <Style TargetType="Button">
                                     <Setter Property="Visibility" Value="Collapsed" />
@@ -76,7 +76,10 @@
                         <Button Padding="2" Margin="5 0 0 0" Click="ConfirmButtonClicked">
                             <TextBlock Text="{x:Static locale:en_US.CONFIRM}"/>
                         </Button>
-                    </StackPanel>
+						<Button Padding="2" Margin="5 0 0 0" Click="Button_Click">
+							<TextBlock Text="{x:Static locale:en_US.REMOVE}"/>
+						</Button>
+					</StackPanel>
                 </StackPanel>
             </Expander.Header>
 

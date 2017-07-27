@@ -80,6 +80,7 @@
     </Compile>
     <Compile Include="CustomControls\PersonImagePresenter\PersonImagePresenterModel.cs" />
     <Compile Include="CustomControls\PersonImagePresenter\RemoveImageEventArgs.cs" />
+    <Compile Include="CustomControls\PersonImagePresenter\RemovePersonEventArgs.cs" />
     <Compile Include="Resource\en-US.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

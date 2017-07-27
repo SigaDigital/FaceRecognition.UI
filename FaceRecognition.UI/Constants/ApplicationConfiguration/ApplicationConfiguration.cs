@@ -45,9 +45,9 @@ namespace FaceRecognition.UI.Constants.ApplicationConfiguration
             this.ValidateAndCreateDirectory(GetTempTrainPath());
             this.ValidateAndCreateDirectory(Path.Combine(ApplicationDataDirectory, INSTANCE_DIRECTORY_NAME));
 
-            if (!Directory.Exists(Path.Combine(ApplicationDataDirectory, COMMON_DATA_DIRECTORY)))
+            if (!Directory.Exists(Path.Combine(ApplicationDataDirectory, COMMON_DATA_DIRECTORY, DESCRIPTOR_DIRECTORY)))
             {
-                FileUtils.CopyDirectory(Path.Combine(ApplicationPath, CORE_DIRECTORY, COMMON_DATA_DIRECTORY), Path.Combine(ApplicationDataDirectory, COMMON_DATA_DIRECTORY));
+                FileUtils.CopyDirectory(Path.Combine(ApplicationPath, CORE_DIRECTORY, COMMON_DATA_DIRECTORY, DESCRIPTOR_DIRECTORY), Path.Combine(ApplicationDataDirectory, COMMON_DATA_DIRECTORY, DESCRIPTOR_DIRECTORY));
             }
         }
 

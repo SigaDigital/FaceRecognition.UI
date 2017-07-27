@@ -115,5 +115,23 @@ namespace FaceRecognition.UI.Views
 
             this.UpdateUnknownPeople();
         }
+
+        public void RemovePerson(object sender, RemovePersonEventArgs args)
+        {
+            var personObj = this.PersonImage.Where(x => x.ImagePaths.Contains(args.ImageDirectory)).FirstOrDefault();
+
+            if (personObj != null)
+            {
+                var unknownPeopleDirectory = IoC.Get<IApplicationConfiguration>().GetUnknownPeopleDirectory();
+                var imgDir = new DirectoryInfo(Path.Combine(unknownPeopleDirectory, Path.GetDirectoryName(personObj.ImagePaths[0])));
+
+                foreach (var file in imgDir.GetFiles())
+                {
+                    File.Delete(file.FullName);
+                }
+
+                this.UpdateUnknownPeople();
+            }
+        }
     }
 }

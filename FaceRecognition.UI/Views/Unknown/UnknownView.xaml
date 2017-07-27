@@ -21,7 +21,7 @@
                         <ItemsControl Grid.Row="1" ItemsSource="{Binding PersonImage, UpdateSourceTrigger=PropertyChanged}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <ctrls:PersonImagePresenterControl PersonName="{Binding PersonName}" ImagePaths="{Binding ImagePaths}" RenderMode="{Binding HeaderMode}" HasChanged="{Binding HasChanged, Mode=OneWayToSource}"/>
+									<ctrls:PersonImagePresenterControl PersonName="{Binding PersonName}" ImagePaths="{Binding ImagePaths}" RenderMode="{Binding HeaderMode}" HasChanged="{Binding HasChanged, Mode=OneWayToSource}" cal:Message.Attach="[Event RemovePersonHandler] = [Action RemovePerson($source, $eventArgs)]"/>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>

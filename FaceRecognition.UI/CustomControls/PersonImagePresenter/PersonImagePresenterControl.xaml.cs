@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace FaceRecognition.UI.CustomControls
 {
@@ -70,6 +71,9 @@ namespace FaceRecognition.UI.CustomControls
         #region Event
         public delegate void RemoveImageEventHandler(object sender, RemoveImageEventArgs e);
         public event RemoveImageEventHandler RemoveImageHandler;
+
+        public delegate void RemovePersonEventHandler(object sender, RemovePersonEventArgs e);
+        public event RemovePersonEventHandler RemovePersonHandler;
         #endregion
 
         public PersonImagePresenterControl()
@@ -81,7 +85,6 @@ namespace FaceRecognition.UI.CustomControls
         private void ConfirmButtonClicked(object sender, RoutedEventArgs e)
         {
             HasChanged = true;
-
         }
 
         private void CancelButtonClicked(object sender, RoutedEventArgs e)
@@ -93,6 +96,8 @@ namespace FaceRecognition.UI.CustomControls
         {
             var selectedImagePath = ImageContainer.SelectedItem as string;
             var selectedImageIndex = ImageContainer.SelectedIndex;
+
+            Debug.WriteLine(selectedImagePath);
 
             if (this.ImagePaths != null) 
             {
@@ -107,5 +112,16 @@ namespace FaceRecognition.UI.CustomControls
             }
         }
         #endregion
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (RemovePersonHandler != null)
+            {
+                RemovePersonHandler(sender, new RemovePersonEventArgs
+                {
+                    ImageDirectory = ImagePaths.FirstOrDefault()
+                });
+            }
+        }
     }
 }

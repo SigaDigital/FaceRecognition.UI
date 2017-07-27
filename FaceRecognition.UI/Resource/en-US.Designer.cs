@@ -151,6 +151,15 @@ namespace FaceRecognition.UI.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string REMOVE {
+            get {
+                return ResourceManager.GetString("REMOVE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stop.
         /// </summary>
         public static string STOP {

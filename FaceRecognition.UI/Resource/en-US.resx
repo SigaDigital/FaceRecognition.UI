@@ -147,6 +147,9 @@
   <data name="PROCEED" xml:space="preserve">
     <value>Proceed</value>
   </data>
+  <data name="REMOVE" xml:space="preserve">
+    <value>Remove</value>
+  </data>
   <data name="STOP" xml:space="preserve">
     <value>Stop</value>
   </data>
